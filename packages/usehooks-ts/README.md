@@ -42,7 +42,7 @@ The library is designed to be as minimal as possible. It is fully tree-shakable 
 ### Usage example
 
 ```tsx
-import { useLocalStorage } from 'usehooks-ts'
+import { useLocalStorage } from '@vezham/usehooks-ts'
 
 function Component() {
   const [value, setValue] = useLocalStorage('my-localStorage-key', 0)

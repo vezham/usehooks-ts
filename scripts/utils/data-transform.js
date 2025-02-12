@@ -11,7 +11,7 @@
  *
  * Into this:
  *
- * import { useBoolean, useCounter, useInterval } from 'usehooks-ts'
+ * import { useBoolean, useCounter, useInterval } from '@vezham/usehooks-ts'
  */
 export function transformImports(data) {
   // const importRegex = /import { ([^}]+) } from ['"]\.\.\/use([^'"]+)['"]/g
@@ -27,7 +27,7 @@ export function transformImports(data) {
   if (imports.length > 0) {
     // Concatenate import names and create the new import statement
     const importNames = imports.map(({ importName }) => importName).join(', ')
-    const newImportStatement = `import { ${importNames} } from 'usehooks-ts'`
+    const newImportStatement = `import { ${importNames} } from '@vezham/usehooks-ts'`
 
     // Replace existing import statements with the new one
     if (data.indexOf(imports[0].importName) !== -1) {

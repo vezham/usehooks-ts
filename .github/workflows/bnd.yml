@@ -1,0 +1,64 @@
+# wjdlz/NOTE: ci@1.0.5
+name: bnd
+
+on:
+  pull_request:
+    types: [closed]
+  push:
+    branches: [timeline]
+    paths:
+      - ".github/workflows/bnd.yml"
+      - ".changeset/**"
+      - "packages/**"
+
+concurrency:
+  group: bnd-${{ github.workflow }}-${{ github.ref }}
+  # cancel-in-progress: true
+# timeout-minutes: 10
+
+permissions:
+  contents: write
+  pull-requests: write
+  # packages: write
+
+env:
+  REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
+  BRANCH: ${{ github.ref_name || 'timeline' }} # inputs.GIT_BRANCH
+
+jobs:
+  bnd:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
+
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install-npm@timeline
+        with:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # - name: fork | build
+      #   if: github.event_name == 'pull_request'
+      #   # id: build
+      #   continue-on-error: false
+      #   shell: bash
+      #   run: |
+      #     pnpm build || {
+      #       echo "build failed with exit code $?"
+      #       exit 1
+      #     }
+
+      - name: action | changesets/NPM-release
+        uses: vezham/v0xFE-deployer/.github/actions/changesets/release@timeline
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: ci-setup | LOG
+        if: always()
+        uses: vezham/v0xFE-deployer/.github/actions/common/log-artifact@timeline

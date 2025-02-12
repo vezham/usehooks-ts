@@ -4,7 +4,7 @@ import { useState } from 'react'
 
 import { Check, Copy } from 'lucide-react'
 import type { ComponentProps } from 'react'
-import { useCopyToClipboard } from 'usehooks-ts'
+import { useCopyToClipboard } from '@vezham/usehooks-ts'
 
 import { Button } from './ui/button'
 import {

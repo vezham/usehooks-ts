@@ -1,16 +1,26 @@
 {
-  "name": "usehooks-ts",
-  "private": false,
-  "version": "3.1.1",
+  "name": "@vezham/usehooks-ts",
   "description": "React hook library, ready to use, written in Typescript.",
-  "author": "Julien CARON <juliencaron@protonmail.com>",
-  "homepage": "https://usehooks-ts.com",
+  "version": "0.0.0",
   "keywords": [
     "typescript",
     "react",
     "hooks"
   ],
+  "author": "Vezham <developers@vezham.com>",
+  "homepage": "https://vezham.com",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vezham/usehooks-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/vezham/usehooks-ts/issues"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,7 +37,6 @@
       }
     }
   },
-  "sideEffects": false,
   "scripts": {
     "build": "tsup",
     "dev": "tsup --watch",
@@ -60,15 +69,5 @@
   },
   "engines": {
     "node": ">=16.15.0"
-  },
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/juliencrn/usehooks-ts"
-  },
-  "bugs": {
-    "url": "https://github.com/juliencrn/usehooks-ts/issues"
   }
 }
