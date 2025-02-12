@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.0.1
+
+### Patch Changes
+
+- [`ff869f6`](https://github.com/vezham/usehooks-ts/commit/ff869f64366cdc6daabbcbd6968a00a89ad1ca1f) Thanks [@vigneshwaran-vtpl](https://github.com/vigneshwaran-vtpl)! - init ver
+
 ## 3.1.1
 
 ### Patch Changes
