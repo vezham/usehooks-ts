@@ -56,8 +56,10 @@
     "zx": "^7.2.3"
   },
   "engines": {
-    "node": ">=18.17.0"
+    "node": ">=20.x",
+    "pnpm": ">=9.x"
   },
+  "packageManager": "pnpm@9.6.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/juliencrn/usehooks-ts"
