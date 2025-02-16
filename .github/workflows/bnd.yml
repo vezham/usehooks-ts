@@ -17,9 +17,10 @@ concurrency:
 # timeout-minutes: 10
 
 permissions:
+  id-token: write
   contents: write
+  packages: write
   pull-requests: write
-  # packages: write
 
 env:
   REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
