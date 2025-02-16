@@ -20,7 +20,6 @@ permissions:
   contents: write
   pull-requests: write
   checks: write
-  # packages: write
 
 env:
   REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
