@@ -1,0 +1,51 @@
+import { Meta } from '@storybook/blocks'
+
+import { StoryStatus } from '@vezham/storybook'
+
+<Meta title="Hooks/useIsFirstRender/README" />
+
+## useIsFirstRender
+
+<StoryStatus
+  usecase="completed"
+  dev="completed"
+  storybook="completed"
+  tests="completed"
+/>
+
+Simple React hook that return a boolean;
+
+- True at the mount time
+- Then always false
+
+See also:
+
+- [`useEffectOnce()`](/?path=/docs/hooks-useeffectonce-readme--overview): A modified `useEffect()` executed only on mount
+- [`useEffect()`](/?path=/docs/hooks-useeffect-readme--overview): A modified `useEffect()` executed only on updates (skip first render)
+
+### Usage
+
+```tsx
+import { useEffect, useState } from 'react'
+
+import { useIsFirstRender, useLogger } from '@vezham/hooks'
+
+const NAMESPACE = 'useIsFirstRender'
+
+export default function Component() {
+  const isFirst = useIsFirstRender()
+  const [data, setData] = useState<number>(0)
+
+  useEffect(() => {
+    useLogger.info(NAMESPACE, 'Normal useEffect', { data })
+  }, [data])
+
+  return (
+    <div>
+      <p>Open your console</p>
+      <p>Is first render: {isFirst ? 'yes' : 'no'}</p>
+      <button onClick={() => setData(Date.now())}>Update data</button>
+    </div>
+  )
+}
+```

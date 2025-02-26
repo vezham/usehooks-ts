@@ -23,19 +23,32 @@ describe('useCopyToClipboard()', () => {
   it('should use clipboard', () => {
     const { result } = renderHook(() => useCopyToClipboard())
 
-    expect(result.current[0]).toBe(null)
-    expect(typeof result.current[1]).toBe('function')
+    expect(result.current.value).toBe(null)
+    expect(typeof result.current.copy).toBe('function')
+    expect(typeof result.current.copyWithToast).toBe('function')
   })
 
   it('should copy to the clipboard and the state', async () => {
     const { result } = renderHook(() => useCopyToClipboard())
 
     await act(async () => {
-      await result.current[1](mockData)
+      await result.current.copy(mockData)
     })
 
     expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
     expect(navigator.clipboard.writeText).toHaveBeenCalledWith(mockData)
-    expect(result.current[0]).toBe(mockData)
+    expect(result.current.value).toBe(mockData)
+  })
+
+  it('should copy to the clipboard and the state - copyWithToast', async () => {
+    const { result } = renderHook(() => useCopyToClipboard())
+
+    await act(async () => {
+      await result.current.copyWithToast(mockData)
+    })
+
+    expect(navigator.clipboard.writeText).toHaveBeenCalledTimes(1)
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(mockData)
+    expect(result.current.value).toBe(mockData)
   })
 })

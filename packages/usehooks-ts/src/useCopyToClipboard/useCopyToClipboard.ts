@@ -1,5 +1,10 @@
 import { useCallback, useState } from 'react'
 
+import { useLogger } from '@vezham/use-logger'
+import { useToast } from '@vezham/use-toast'
+
+const NAMESPACE = 'useCopyToClipboard'
+
 /**
  * The copied text as `string` or `null` if nothing has been copied yet.
  */
@@ -11,6 +16,8 @@ type CopiedValue = string | null
  * @returns {Promise<boolean>} A promise that resolves to `true` if the text was copied successfully, or `false` otherwise.
  */
 type CopyFn = (text: string) => Promise<boolean>
+
+type copyWithToastFn = (text?: string, message?: string) => Promise<boolean>
 
 /**
  * Custom hook that copies text to the clipboard using the [`Clipboard API`](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API).
@@ -33,12 +40,23 @@ type CopyFn = (text: string) => Promise<boolean>
  *   });
  * ```
  */
-export function useCopyToClipboard(): [CopiedValue, CopyFn] {
+
+type useOutput = {
+  value: CopiedValue
+  copy: CopyFn
+  copyWithToast: copyWithToastFn
+}
+
+//   return { value, copy, copyWithToast }
+// }
+
+export function useCopyToClipboard(): useOutput {
   const [copiedText, setCopiedText] = useState<CopiedValue>(null)
+  const { toast } = useToast()
 
   const copy: CopyFn = useCallback(async text => {
     if (!navigator?.clipboard) {
-      console.warn('Clipboard not supported')
+      useLogger.log(NAMESPACE, 'not supported')
       return false
     }
 
@@ -48,11 +66,23 @@ export function useCopyToClipboard(): [CopiedValue, CopyFn] {
       setCopiedText(text)
       return true
     } catch (error) {
-      console.warn('Copy failed', error)
+      useLogger.error(NAMESPACE, 'Copy failed', error)
       setCopiedText(null)
       return false
     }
   }, [])
 
-  return [copiedText, copy]
+  const copyWithToast: copyWithToastFn = async (
+    text = '',
+    message = 'copied to clipboard',
+  ) => {
+    const status = await copy(text)
+    if (status) {
+      useLogger.debug(NAMESPACE, message)
+      toast({ title: message })
+    }
+    return status
+  }
+
+  return { value: copiedText, copy, copyWithToast }
 }
