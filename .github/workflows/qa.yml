@@ -51,21 +51,25 @@ jobs:
             exit 1
           }
 
-  # types:
-  #   runs-on: ubuntu-latest
+  types:
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-  #       uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
-  #       with:
-  #         GIT_REPO: ${{ env.REPO }}
-  #         GIT_BRANCH: ${{ env.BRANCH }}
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
 
-  #     - name: action | node & pnpm
-  #       uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
 
-  #     - name: fork | TypeScript
-  #       run: pnpm typecheck
+      - name: fork | typecheck
+        shell: bash
+        run: |
+          cd packages/usehooks-ts
+          pwd
+          pnpm typecheck
 
   lint:
     runs-on: ubuntu-latest
