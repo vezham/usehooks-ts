@@ -1,5 +1,11 @@
 # @vezham/usehooks-ts
 
+## 0.0.4
+
+### Patch Changes
+
+- [`a73ce5a`](https://github.com/vezham/usehooks-ts/commit/a73ce5a19abb58ee4abdd9f864b1f6ccdeb268f1) Thanks [@vigneshwaran-vtpl](https://github.com/vigneshwaran-vtpl)! - sync with old impl - v3
+
 ## 0.0.3
 
 ### Patch Changes
