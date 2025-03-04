@@ -17,7 +17,7 @@ The `useResizeObserver` hook does not provide polyfill to give you control, but 
 ```ts
 // useResizeObserver.ts
 import { ResizeObserver } from '@juggle/resize-observer'
-import { useResizeObserver } from 'usehooks-ts'
+import { useResizeObserver } from '@v0xoss/usehooks-ts'
 
 if (!window.ResizeObserver) {
   window.ResizeObserver = ResizeObserver

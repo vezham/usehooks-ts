@@ -1,0 +1,129 @@
+# wjdlz/NOTE: @v0xci
+name: QA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [timeline]
+    paths:
+      - ".github/workflows/qa.yml"
+      - ".changeset/**"
+      - "packages/**"
+
+concurrency:
+  group: qa-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+# timeout-minutes: 10
+
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
+
+env:
+  REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
+  BRANCH: ${{ github.ref_name || 'timeline' }} # inputs.GIT_BRANCH
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
+
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
+
+      - name: fork | build
+        # id: build
+        # continue-on-error: false
+        shell: bash
+        run: |
+          cd packages/usehooks-ts
+          pwd
+          pnpm build || {
+            echo "build failed with exit code $?"
+            exit 1
+          }
+
+  types:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
+
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
+
+      - name: fork | typecheck
+        shell: bash
+        run: |
+          cd packages/usehooks-ts
+          pwd
+          pnpm typecheck
+
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
+
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
+
+      - name: fork | lint - ESLint
+        shell: bash
+        run: |
+          cd packages/usehooks-ts
+          pwd
+          pnpm lint
+
+  prettier:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
+
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
+
+      - name: fork | format - Prettier
+        shell: bash
+        run: |
+          pnpm format
+
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        with:
+          GIT_REPO: ${{ env.REPO }}
+          GIT_BRANCH: ${{ env.BRANCH }}
+
+      - name: action | node & pnpm
+        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install@timeline
+
+      - name: fork | test - vitest
+        shell: bash
+        run: |
+          cd packages/usehooks-ts
+          pwd
+          pnpm test

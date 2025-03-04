@@ -1,4 +1,4 @@
-import { useEventListener } from 'usehooks-ts'
+import { useEventListener } from '@v0xoss/usehooks-ts'
 
 export function useCmdK(callback: () => void) {
   useEventListener('keydown', event => {

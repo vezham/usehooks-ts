@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 
+import { useLogger } from '@vezham/use-logger'
 import type { Dispatch, SetStateAction } from 'react'
 
 import { useEventCallback } from '../useEventCallback'
 import { useEventListener } from '../useEventListener'
+
+const NAMESPACE = 'useLocalStorage'
 
 declare global {
   // eslint-disable-next-line @typescript-eslint/consistent-type-definitions
@@ -80,7 +83,7 @@ export function useLocalStorage<T>(
       try {
         parsed = JSON.parse(value)
       } catch (error) {
-        console.error('Error parsing JSON:', error)
+        useLogger.error(NAMESPACE, 'Error parsing JSON:', error)
         return defaultValue // Return initialValue if parsing fails
       }
 
@@ -104,7 +107,11 @@ export function useLocalStorage<T>(
       const raw = window.localStorage.getItem(key)
       return raw ? deserializer(raw) : initialValueToUse
     } catch (error) {
-      console.warn(`Error reading localStorage key “${key}”:`, error)
+      useLogger.error(
+        NAMESPACE,
+        `Error reading localStorage key “${key}”:`,
+        error,
+      )
       return initialValueToUse
     }
   }, [initialValue, key, deserializer])
@@ -122,7 +129,8 @@ export function useLocalStorage<T>(
   const setValue: Dispatch<SetStateAction<T>> = useEventCallback(value => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
-      console.warn(
+      useLogger.warn(
+        NAMESPACE,
         `Tried setting localStorage key “${key}” even though environment is not a client`,
       )
     }
@@ -140,14 +148,19 @@ export function useLocalStorage<T>(
       // We dispatch a custom event so every similar useLocalStorage hook is notified
       window.dispatchEvent(new StorageEvent('local-storage', { key }))
     } catch (error) {
-      console.warn(`Error setting localStorage key “${key}”:`, error)
+      useLogger.warn(
+        NAMESPACE,
+        `Error setting localStorage key “${key}”:`,
+        error,
+      )
     }
   })
 
   const removeValue = useEventCallback(() => {
     // Prevent build error "window is undefined" but keeps working
     if (IS_SERVER) {
-      console.warn(
+      useLogger.warn(
+        NAMESPACE,
         `Tried removing localStorage key “${key}” even though environment is not a client`,
       )
     }

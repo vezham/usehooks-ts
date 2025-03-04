@@ -1,7 +1,7 @@
 import { useCopyToClipboard } from './useCopyToClipboard'
 
 export default function Component() {
-  const [copiedText, copy] = useCopyToClipboard()
+  const { value, copy } = useCopyToClipboard()
 
   const handleCopy = (text: string) => () => {
     copy(text)
@@ -21,7 +21,7 @@ export default function Component() {
         <button onClick={handleCopy('B')}>B</button>
         <button onClick={handleCopy('C')}>C</button>
       </div>
-      <p>Copied value: {copiedText ?? 'Nothing is copied yet!'}</p>
+      <p>Copied value: {value ?? 'Nothing is copied yet!'}</p>
     </>
   )
 }

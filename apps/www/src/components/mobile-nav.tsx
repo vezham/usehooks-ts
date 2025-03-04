@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import Link from 'next/link'
-import { useScrollLock } from 'usehooks-ts'
+import { useScrollLock } from '@v0xoss/usehooks-ts'
 
 import { Logo } from '@/components/ui/icons'
 import { siteConfig } from '@/config/site'

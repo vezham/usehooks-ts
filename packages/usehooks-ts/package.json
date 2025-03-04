@@ -1,16 +1,26 @@
 {
-  "name": "usehooks-ts",
-  "private": false,
-  "version": "3.1.1",
+  "name": "@v0xoss/usehooks-ts",
   "description": "React hook library, ready to use, written in Typescript.",
-  "author": "Julien CARON <juliencaron@protonmail.com>",
-  "homepage": "https://usehooks-ts.com",
+  "version": "0.0.0",
   "keywords": [
     "typescript",
     "react",
     "hooks"
   ],
+  "author": "v0xOSS <oss-developers@vezham.com>",
+  "homepage": "https://vezham.com",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vezham/usehooks-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/vezham/usehooks-ts/issues"
+  },
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -27,8 +37,8 @@
       }
     }
   },
-  "sideEffects": false,
   "scripts": {
+    "typecheck": "tsc --noEmit",
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
@@ -53,6 +63,8 @@
     "vitest": "^1.3.1"
   },
   "dependencies": {
+    "@vezham/use-logger": "^0.0.5",
+    "@vezham/use-toast": "^0.0.5",
     "lodash.debounce": "^4.0.8"
   },
   "peerDependencies": {
@@ -60,15 +72,5 @@
   },
   "engines": {
     "node": ">=16.15.0"
-  },
-  "files": [
-    "dist"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/juliencrn/usehooks-ts"
-  },
-  "bugs": {
-    "url": "https://github.com/juliencrn/usehooks-ts/issues"
   }
 }

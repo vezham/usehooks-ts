@@ -1,0 +1,49 @@
+import { Meta } from '@storybook/blocks'
+
+import { StoryStatus } from '@vezham/storybook-utils'
+
+<Meta title="Hooks/useEffect/README" />
+
+## useEffect
+
+<StoryStatus
+  usecase="completed"
+  dev="completed"
+  storybook="completed"
+  tests="completed"
+/>
+
+Just modified version of `useEffect` that is skipping the first render.
+
+See also:
+
+- [`useEffectOnce()`](/?path=/docs/hooks-useeffectonce-readme--overview): Inverse of `useEffect()`
+- [`useIsFirstRender()`](/?path=/docs/hooks-useisfirstrender-readme--overview): Return a `boolean`
+
+### Usage
+
+```tsx
+import { useEffect as useEffectReact, useState } from 'react'
+
+import { useEffect, useLogger } from '@vezham/hooks'
+
+const NAMESPACE = 'useEffect'
+
+export default function Component() {
+  const [data, setData] = useState < number > 0
+  useEffectReact(() => {
+    useLogger.info(NAMESPACE, 'react | useEffect', { data })
+  }, [data])
+
+  useEffect(() => {
+    useLogger.info(NAMESPACE, '@vezham/hooks | useEffect', { data })
+  }, [data])
+
+  return (
+    <div>
+      <p>Open your console</p>
+      <button onClick={() => setData(Date.now())}>Update data</button>
+    </div>
+  )
+}
+```
