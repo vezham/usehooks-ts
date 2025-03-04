@@ -1,5 +1,11 @@
 # @v0xoss/usehooks-ts
 
+## 0.0.2
+
+### Patch Changes
+
+- [`b42b212`](https://github.com/vezham/usehooks-ts/commit/b42b21201c6fb693e6f55a5526da840960471ccc) Thanks [@v0xvigneshwaran](https://github.com/v0xvigneshwaran)! - sync ver bump
+
 ## 0.0.1
 
 ### Patch Changes
