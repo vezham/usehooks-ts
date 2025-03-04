@@ -101,6 +101,8 @@ module.exports = {
     // '@typescript-eslint/consistent-type-definitions': 'off', // Will come in v3
     '@typescript-eslint/no-unnecessary-condition': 'off', // TODO: Enable it
     '@typescript-eslint/prefer-ts-expect-error': 'off',
+    // v0x
+    '@typescript-eslint/restrict-template-expressions': 'off',
   },
   overrides: [
     // Specials rules for testing

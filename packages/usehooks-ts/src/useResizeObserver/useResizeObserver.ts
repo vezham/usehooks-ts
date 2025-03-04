@@ -124,8 +124,10 @@ function extractSize(
     return undefined
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return Array.isArray(entry[box])
-    ? entry[box][0][sizeType]
+    ? // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      entry[box][0][sizeType]
     : // @ts-ignore Support Firefox's non-standard behavior
       (entry[box][sizeType] as number)
 }
