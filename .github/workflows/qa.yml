@@ -2,6 +2,8 @@
 name: QA
 
 on:
+  schedule:
+    - cron: '30 23 * * 2,5' # Wed, Sat at 5am IST
   workflow_dispatch:
   push:
     branches: [timeline]
@@ -9,6 +11,8 @@ on:
       - ".github/workflows/qa.yml"
       - ".changeset/**"
       - "packages/**"
+
+run-name: "${{ github.event_name == 'schedule' && 'Timeline - QA' || github.event_name == 'workflow_dispatch' && 'Dry Run' || github.ref_name }} - by @${{ github.actor || 'v0x' }}"
 
 concurrency:
   group: qa-${{ github.workflow }}-${{ github.ref }}
