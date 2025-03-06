@@ -3,7 +3,7 @@ name: QA
 
 on:
   schedule:
-    - cron: '30 23 * * 2,5' # Wed, Sat at 5am IST
+    - cron: '30 22 * * 2,5' # Wed, Sat at 4am IST
   workflow_dispatch:
   push:
     branches: [timeline]
