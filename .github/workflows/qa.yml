@@ -12,7 +12,7 @@ on:
       - ".changeset/**"
       - "packages/**"
 
-run-name: "${{ github.event_name == 'schedule' && 'Timeline - QA' || github.event_name == 'workflow_dispatch' && 'Dry Run' || github.event.head_commit.message || github.event.workflow_run.head_commit.message || github.ref_name }} - by @${{ github.actor || 'v0x' }}"
+run-name: "${{ github.event_name == 'schedule' && 'ci(TVA): QA' || github.event_name == 'workflow_dispatch' && 'ci(TVA): Dry Run - QA' || github.event.head_commit.message || github.event.workflow_run.head_commit.message || github.ref_name }} - by @${{ github.event_name == 'schedule' && 'v0x' || github.actor || 'v0xci' }}"
 
 concurrency:
   group: qa-${{ github.workflow }}-${{ github.ref }}
