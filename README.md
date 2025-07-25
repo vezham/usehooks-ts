@@ -15,4 +15,4 @@
 
 This repository mirrors the [usehooks-ts](https://github.com/juliencrn/usehooks-ts) repo to suit our needs.
 
-Please report all issues and make contributions to the upstream repo.
+Please report any issues and contribute to the upstream repository.
