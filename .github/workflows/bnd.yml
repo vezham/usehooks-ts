@@ -6,7 +6,7 @@ on:
   pull_request:
     types: [closed]
   push:
-    branches: [timeline]
+    branches: [timeline, feat/vx-oss]
     paths:
       - ".github/workflows/bnd.yml"
       - ".changeset/**"
