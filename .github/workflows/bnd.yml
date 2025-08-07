@@ -1,4 +1,4 @@
-# wjdlz/NOTE: @v0xci
+# @vx/INFO: @vx/ci
 name: bnd
 
 on:
@@ -15,7 +15,7 @@ on:
 concurrency:
   group: bnd-${{ github.workflow }}-${{ github.ref }}
   # cancel-in-progress: true
-# timeout-minutes: 10
+  # timeout-minutes: 10
 
 permissions:
   id-token: write
@@ -33,13 +33,13 @@ jobs:
 
     steps:
       - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
-        uses: vezham/v0xFE-deployer/.github/actions/common/setup-checkout@timeline
+        uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
       - name: action | node & pnpm
-        uses: vezham/v0xFE-deployer/.github/actions/common/setup-install-npm@timeline
+        uses: vezham/vx-fe-deployer/.github/actions/common/setup-install-npm@timeline
         with:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -57,11 +57,11 @@ jobs:
           }
 
       - name: action | changesets/NPM-release
-        uses: vezham/v0xFE-deployer/.github/actions/changesets/release@timeline
+        uses: vezham/vx-fe-deployer/.github/actions/changesets/release@timeline
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: ci-setup | LOG
         if: always()
-        uses: vezham/v0xFE-deployer/.github/actions/common/log-artifact@timeline
+        uses: vezham/vx-fe-deployer/.github/actions/common/log-artifact@timeline

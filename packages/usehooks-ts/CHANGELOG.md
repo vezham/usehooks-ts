@@ -1,4 +1,4 @@
-# @v0xoss/usehooks-ts
+# @vx-oss/usehooks-ts
 
 ## 0.0.2
 

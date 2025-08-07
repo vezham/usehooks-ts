@@ -1,5 +1,5 @@
 {
-  "name": "@v0xoss/usehooks-ts",
+  "name": "@vx-oss/usehooks-ts",
   "description": "React hook library, ready to use, written in Typescript.",
   "version": "0.0.2",
   "keywords": [
@@ -7,7 +7,7 @@
     "react",
     "hooks"
   ],
-  "author": "v0xOSS <oss-developers@vezham.com>",
+  "author": "Vx OSS Devs <oss-developers@vezham.com>",
   "homepage": "https://vezham.com",
   "license": "MIT",
   "repository": {
