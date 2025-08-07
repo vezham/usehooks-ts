@@ -15,8 +15,8 @@
   "scripts": {
     "@vx/cli:format-check": "prettier --write \"**/*.{json,md,mdx,css,scss,yaml,yml}\" --ignore-path .prettierignore",
     "@vx/ws:changeset": "changeset",
-    "@vx/ws:changeset:checklist-release": "bash v/bin/checklist-release/bin/main.sh",
-    "@vx/ws:changeset:update-versions": "bash v/bin/update-versions/bin/main.sh",
+    "@vx/ws:changeset:checklist-release": "bash vx/bin/checklist-release/bin/main.sh",
+    "@vx/ws:changeset:update-versions": "bash vx/bin/update-versions/bin/main.sh",
     "preinstall": "npx only-allow pnpm",
     "dev": "turbo run dev",
     "build": "turbo run build",
