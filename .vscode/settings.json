@@ -43,7 +43,8 @@
     "rehype",
     "tailwindcss",
     "UMAMI",
-    "usehooks"
+    "usehooks",
+    "vezham", "vx"
   ],
   "eslint.workingDirectories": [
     {
