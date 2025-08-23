@@ -25,6 +25,7 @@ permissions:
 env:
   REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
   BRANCH: ${{ github.ref_name || 'timeline' }} # inputs.GIT_BRANCH
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN_VX_OSS }}
 
 jobs:
   bnd:
