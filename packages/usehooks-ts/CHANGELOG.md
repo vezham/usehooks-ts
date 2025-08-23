@@ -1,5 +1,15 @@
 # @vx-oss/usehooks-ts
 
+## 0.1.0
+
+### Minor Changes
+
+- [`52239da`](https://github.com/vezham/usehooks-ts/commit/52239da838f20c037b937644266923bb1e386285) Thanks [@v0xvigneshwaran](https://github.com/v0xvigneshwaran)! - ver bump
+
+### Patch Changes
+
+- [`0d5b1af`](https://github.com/vezham/usehooks-ts/commit/0d5b1af47f6594be53152de078298ae4860b33b0) Thanks [@v0xvigneshwaran](https://github.com/v0xvigneshwaran)! - ver bump
+
 ## 0.0.3
 
 ### Patch Changes
