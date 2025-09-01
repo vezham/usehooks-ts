@@ -25,7 +25,7 @@ permissions:
 env:
   REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
   BRANCH: ${{ github.ref_name || 'timeline' }} # inputs.GIT_BRANCH
-  NPM_TOKEN: ${{ secrets.NPM_TOKEN_VX_OSS }}
+  NPM_TOKEN: ${{ secrets.VX_DEPLOYER_NPM }}
 
 jobs:
   bnd:
@@ -42,7 +42,7 @@ jobs:
       - name: action | node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install-npm@timeline
         with:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN_VX_OSS }}
+          NPM_TOKEN: ${{ secrets.VX_DEPLOYER_NPM }}
 
       - name: fork | build
         if: github.event_name == 'pull_request'
@@ -61,7 +61,7 @@ jobs:
         uses: vezham/vx-fe-deployer/.github/actions/changesets/release@timeline
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN_VX_OSS }}
+          NPM_TOKEN: ${{ secrets.VX_DEPLOYER_NPM }}
 
       - name: ci-setup | LOG
         if: always()
