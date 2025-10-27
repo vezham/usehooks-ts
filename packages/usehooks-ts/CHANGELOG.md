@@ -1,5 +1,11 @@
 # @vx-oss/usehooks-ts
 
+## 0.1.2
+
+### Patch Changes
+
+- [`d852e5e`](https://github.com/vezham/usehooks-ts/commit/d852e5e3ab6799895fa607b364258dbcfc93b602) Thanks [@v0xvigneshwaran](https://github.com/v0xvigneshwaran)! - added LICENSE Note
+
 ## 0.1.1
 
 ### Patch Changes
