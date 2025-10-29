@@ -23,8 +23,9 @@ permissions:
   pull-requests: write
 
 env:
-  REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
-  BRANCH: ${{ github.ref_name || 'timeline' }} # inputs.GIT_BRANCH
+  REPO: ${{ github.repository || 'vezham/usehooks-ts' }}
+  BRANCH: ${{ github.ref_name || 'timeline' }}
+  ACTOR: ${{ github.actor || 'vx/ci' }}
   NPM_TOKEN: ${{ secrets.VX_DEPLOYER_NPM }}
 
 jobs:
@@ -33,18 +34,18 @@ jobs:
     timeout-minutes: 30
 
     steps:
-      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+      - name: action | 🧰 Checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
-      - name: action | node & pnpm
+      - name: action | 🧩 Setup Node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install-npm@timeline
         with:
           NPM_TOKEN: ${{ secrets.VX_DEPLOYER_NPM }}
 
-      - name: fork | build
+      - name: fork | 🏗️ Build
         if: github.event_name == 'pull_request'
         # id: build
         continue-on-error: false
@@ -52,17 +53,14 @@ jobs:
         run: |
           cd packages/usehooks-ts
           pwd
-          pnpm build || {
-            echo "build failed with exit code $?"
-            exit 1
-          }
+          pnpm build || { echo "❌ Build failed"; exit 1; }
 
-      - name: action | changesets/NPM-release
+      - name: action | 🚀 changesets - NPM release
         uses: vezham/vx-fe-deployer/.github/actions/changesets/release@timeline
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.VX_DEPLOYER_NPM }}
 
-      - name: ci-setup | LOG
+      - name: ci-setup | 🧾 LOG
         if: always()
         uses: vezham/vx-fe-deployer/.github/actions/common/log-artifact@timeline

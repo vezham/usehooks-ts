@@ -3,16 +3,22 @@ name: QA
 
 on:
   schedule:
-    - cron: '30 22 * * 2,5' # Wed, Sat at 4am IST
+    - cron: '30 22 * * 2,5' # every Wed, Sat at 04:00 AM IST
   workflow_dispatch:
   push:
-    branches: [timeline]
+    branches: [timeline, feat/*]
     paths:
       - ".github/workflows/qa.yml"
       - ".changeset/**"
       - "packages/**"
 
-run-name: "${{ github.event_name == 'schedule' && 'ci(TVA): QA' || github.event_name == 'workflow_dispatch' && 'ci(TVA): Dry Run - QA' || github.event.head_commit.message || github.event.workflow_run.head_commit.message || github.ref_name }} - by @${{ github.event_name == 'schedule' && 'vx' || github.actor || 'vx/ci' }}"
+run-name: >
+  ${{ github.event_name == 'schedule' && 'ci(TVA): QA' ||
+      github.event_name == 'workflow_dispatch' && 'ci(TVA): QA - Trails' ||
+      github.event.head_commit.message ||
+      github.event.workflow_run.head_commit.message ||
+      github.ref_name }} 
+  - by @${{ github.actor || 'vx/ci' }}
 
 concurrency:
   group: qa-${{ github.workflow }}-${{ github.ref }}
@@ -25,49 +31,47 @@ permissions:
   pull-requests: write
 
 env:
-  REPO: ${{ github.repository || 'vezham/usehooks-ts' }} # inputs.GIT_REPO
-  BRANCH: ${{ github.ref_name || 'timeline' }} # inputs.GIT_BRANCH
+  REPO: ${{ github.repository || 'vezham/usehooks-ts' }}
+  BRANCH: ${{ github.ref_name || 'timeline' }}
+  ACTOR: ${{ github.actor || 'vx/ci' }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+      - name: action | 🧰 Checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
-      - name: action | node & pnpm
+      - name: action | 🧩 Setup Node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install@timeline
 
-      - name: fork | build
+      - name: fork | 🏗️ Build
         # id: build
         # continue-on-error: false
         shell: bash
         run: |
           cd packages/usehooks-ts
           pwd
-          pnpm build || {
-            echo "build failed with exit code $?"
-            exit 1
-          }
+          pnpm build || { echo "❌ Build failed"; exit 1; }
 
   types:
     runs-on: ubuntu-latest
 
     steps:
-      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+      - name: action | 🧰 Checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
-      - name: action | node & pnpm
+      - name: action | 🧩 Setup Node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install@timeline
 
-      - name: fork | typecheck
+      - name: fork | 🧠 typecheck
         shell: bash
         run: |
           cd packages/usehooks-ts
@@ -78,16 +82,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+      - name: action | 🧰 Checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
-      - name: action | node & pnpm
+      - name: action | 🧩 Setup Node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install@timeline
 
-      - name: fork | lint - ESLint
+      - name: fork | 🧹 lint - ESLint
         shell: bash
         run: |
           cd packages/usehooks-ts
@@ -98,16 +102,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+      - name: action | 🧰 Checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
-      - name: action | node & pnpm
+      - name: action | 🧩 Setup Node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install@timeline
 
-      - name: fork | format - prettier
+      - name: fork | 🎨 format - prettier
         shell: bash
         run: |
           pnpm @vx/cli:format-check
@@ -116,18 +120,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: action | checkout | ${{ env.REPO }}@${{ env.BRANCH }}
+      - name: action | 🧰 Checkout | ${{ env.REPO }}@${{ env.BRANCH }}
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-checkout@timeline
         with:
           GIT_REPO: ${{ env.REPO }}
           GIT_BRANCH: ${{ env.BRANCH }}
 
-      - name: action | node & pnpm
+      - name: action | 🧩 Setup Node & pnpm
         uses: vezham/vx-fe-deployer/.github/actions/common/setup-install@timeline
 
-      - name: fork | test - vitest
+      - name: fork | 🧪 test - vitest
         shell: bash
         run: |
           cd packages/usehooks-ts
           pwd
           pnpm test
+
+  summary:
+    if: always()
+    needs: [build, types, lint, prettier, tests]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: action | 🧾 Run QA Summary
+        uses: vezham/vx-fe-deployer/.github/actions/common/qa-summary@timeline
+        with:
+          actor: ${{ env.ACTOR }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          build_result: ${{ needs.build.result }}
+          types_result: ${{ needs.types.result }}
+          lint_result: ${{ needs.lint.result }}
+          prettier_result: ${{ needs.prettier.result }}
+          tests_result: ${{ needs.tests.result }}
