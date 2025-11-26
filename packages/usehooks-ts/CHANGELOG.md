@@ -1,5 +1,11 @@
 # @vx-oss/usehooks-ts
 
+## 0.1.4
+
+### Patch Changes
+
+- [`113a93b`](https://github.com/vezham/usehooks-ts/commit/113a93b410d20a4869eff85536c6a6a7f389d34e) Thanks [@vx-vigneshwaran](https://github.com/vx-vigneshwaran)! - wf bnd bump
+
 ## 0.1.3
 
 ### Patch Changes
