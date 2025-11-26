@@ -138,7 +138,7 @@ jobs:
         run: |
           cd packages/usehooks-ts
           pwd
-          pnpm test --passWithNoTests
+          pnpm test
 
   summary:
     if: always()
