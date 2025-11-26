@@ -1,5 +1,11 @@
 # @vx-oss/usehooks-ts
 
+## 0.1.5
+
+### Patch Changes
+
+- [`610b07b`](https://github.com/vezham/usehooks-ts/commit/610b07b1c4b2e6e607d2c022db31c772e8095c56) Thanks [@vx-vigneshwaran](https://github.com/vx-vigneshwaran)! - pr cancel test
+
 ## 0.1.4
 
 ### Patch Changes
